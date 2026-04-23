@@ -3,6 +3,7 @@ package com.miportfolio.comment_service.controller;
 import com.miportfolio.comment_service.dto.CommentRequest;
 import com.miportfolio.comment_service.model.Comment;
 import com.miportfolio.comment_service.repository.CommentRepository;
+import com.miportfolio.comment_service.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -18,25 +19,19 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Comments", description = "API para gestionar los comentarios del portfolio")
 public class CommentController {
-
-    private final CommentRepository repository;
+    private final CommentService commentService; // Inyectamos el servicio, no el repo
 
     @Operation(summary = "Obtener todos los comentarios", description = "Retorna una lista de todos los comentarios realizados")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Comment> getAll() {
-        return repository.findAll();
+        return commentService.getAllComments();
     }
 
     @Operation(summary = "Crear un nuevo comentario", description = "Guarda un comentario. Si el nombre está vacío, se guarda como Anónimo")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Comment create(@Valid @RequestBody CommentRequest request) {
-        Comment comment = new Comment();
-        comment.setUsername(request.getUsername() == null || request.getUsername().isBlank() ? "Anónimo" : request.getUsername());
-        comment.setContent(request.getContent());
-        comment.setCreatedAt(LocalDateTime.now());
-
-        return repository.save(comment);
+        return commentService.saveComment(request);
     }
 }
