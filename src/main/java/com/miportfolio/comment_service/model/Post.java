@@ -1,5 +1,6 @@
 package com.miportfolio.comment_service.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,12 +16,13 @@ public class Post {
     private Long id;
     private String summary;
     private String title;
-
+    private String excerpt;
+    private String author;
+    private List<String> tags = new ArrayList<>();
     @Column(columnDefinition = "TEXT")
     private String content;
-
     private LocalDateTime createdAt = LocalDateTime.now();
-
+    @JsonIgnore
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 }

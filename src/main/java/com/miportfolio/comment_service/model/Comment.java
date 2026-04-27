@@ -25,6 +25,6 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    @JsonIgnore // Evita la serialización del post para prevenir ciclos infinitos
+    @JsonIgnore
     private Post post;
 }
