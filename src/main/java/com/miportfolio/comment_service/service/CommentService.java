@@ -35,4 +35,12 @@ public class CommentService {
         comment.setCreatedAt(LocalDateTime.now());
         return repository.save(comment);
     }
+
+    @Transactional
+    public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new RuntimeException("No se puede eliminar: comentario no encontrado con ID: " + id);
+        }
+        repository.deleteById(id);
+    }
 }

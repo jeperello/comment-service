@@ -33,4 +33,11 @@ public class CommentController {
     public Comment create(@Valid @RequestBody CommentRequest request) {
         return commentService.saveComment(request);
     }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar un comentario", description = "Elimina el comentario con el ID especificado")
+    @ResponseStatus(HttpStatus.NO_CONTENT) // 204 No Content es el estándar para deletes exitosos
+    public void delete(@PathVariable Long id) {
+        commentService.delete(id);
+    }
 }
