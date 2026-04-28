@@ -48,4 +48,10 @@ public class PostController {
     public Comment addComment(@PathVariable Long id, @Valid @RequestBody CommentRequest request) {
         return postService.addCommentToPost(id, request);
     }
+
+    @GetMapping("/{id}/comments")
+    @Operation(summary = "Obtener todos los comentarios de un post específico")
+    public List<Comment> getComments(@PathVariable Long id) {
+        return postService.getCommentsByPostId(id);
+    }
 }

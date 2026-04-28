@@ -52,4 +52,12 @@ public class PostService {
 
         return commentRepository.save(comment);
     }
+
+    @Transactional(readOnly = true)
+    public List<Comment> getCommentsByPostId(Long postId) {
+        if (!postRepository.existsById(postId)) {
+            throw new RuntimeException("Post no encontrado con ID: " + postId);
+        }
+        return commentRepository.findByPostId(postId);
+    }
 }
