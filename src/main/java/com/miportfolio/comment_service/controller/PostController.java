@@ -54,4 +54,22 @@ public class PostController {
     public List<Comment> getComments(@PathVariable Long id) {
         return postService.getCommentsByPostId(id);
     }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Actualizar un post existente", description = "Modifica el título y contenido de un post por su ID")
+    @ResponseStatus(HttpStatus.OK)
+    public Post update(@PathVariable Long id, @Valid @RequestBody PostRequest request) {
+        return postService.updatePost(id, request);
+    }
+
+    @PatchMapping("/{id}")
+    @Operation(
+            summary = "Actualización parcial de un post",
+            description = "Permite modificar solo algunos campos sin necesidad de enviar el objeto completo"
+    )
+
+    @ResponseStatus(HttpStatus.OK)
+    public Post patch(@PathVariable Long id, @RequestBody PostRequest request) {
+        return postService.patchPost(id, request);
+    }
 }
