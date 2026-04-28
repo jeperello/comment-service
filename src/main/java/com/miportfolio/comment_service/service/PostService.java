@@ -1,4 +1,4 @@
-package com.miportfolio.comment_service;
+package com.miportfolio.comment_service.service;
 
 import com.miportfolio.comment_service.dto.CommentRequest;
 import com.miportfolio.comment_service.dto.PostRequest;
@@ -114,4 +114,13 @@ public class PostService {
 
         return postRepository.save(post);
     }
+
+    @Transactional
+    public void deletePost(Long id) {
+        if (!postRepository.existsById(id)) {
+            throw new RuntimeException("No se puede eliminar: Post no encontrado con ID: " + id);
+        }
+        postRepository.deleteById(id);
+    }
+
 }

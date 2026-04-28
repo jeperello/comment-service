@@ -1,6 +1,6 @@
 package com.miportfolio.comment_service.controller;
 
-import com.miportfolio.comment_service.PostService;
+import com.miportfolio.comment_service.service.PostService;
 import com.miportfolio.comment_service.dto.CommentRequest;
 import com.miportfolio.comment_service.dto.PostRequest;
 import com.miportfolio.comment_service.model.Comment;
@@ -71,5 +71,12 @@ public class PostController {
     @ResponseStatus(HttpStatus.OK)
     public Post patch(@PathVariable Long id, @RequestBody PostRequest request) {
         return postService.patchPost(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar un post", description = "Elimina el post y todos sus comentarios asociados")
+    @ResponseStatus(HttpStatus.NO_CONTENT) // 204 No Content es el estándar para deletes exitosos
+    public void delete(@PathVariable Long id) {
+        postService.deletePost(id);
     }
 }
